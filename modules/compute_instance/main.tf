@@ -39,11 +39,12 @@ data "google_compute_zones" "available" {
 #############
 
 resource "google_compute_instance_from_template" "compute_instance" {
-  provider = google
+  provider = google-beta
   count    = local.num_instances
   name     = var.add_hostname_suffix ? "${local.hostname}-${format("%03d", count.index + 1)}" : local.hostname
   project  = local.project_id
   zone     = var.zone == null ? data.google_compute_zones.available.names[count.index % length(data.google_compute_zones.available.names)] : var.zone
+  hostname = format("%s.%s", var.add_hostname_suffix ? "${local.hostname}-${format("%03d", count.index + 1)}" : local.hostname, var.domain)
 
   network_interface {
     network            = var.network

@@ -39,6 +39,12 @@ variable "add_hostname_suffix" {
   default     = true
 }
 
+variable "domain" {
+  type = string
+  description = "Domain to add to FQDN"
+  default     = ""
+}
+
 variable "static_ips" {
   type        = list(string)
   description = "List of static IPs for VM instances"
